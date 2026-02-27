@@ -11,7 +11,6 @@ import (
 type ResultsModel struct {
 	packages []pacman.Package
 	title    string
-	Done     bool
 }
 
 func NewResultsModel(title string, pkgs []pacman.Package) ResultsModel {
@@ -27,7 +26,6 @@ func (m ResultsModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case tea.KeyMsg:
 		switch msg.String() {
 		case "esc", "ctrl+c":
-			m.Done = true
 			return m, tea.Quit
 		}
 	}

@@ -72,7 +72,6 @@ func parseSearchOutput(output, source string) []Package {
 			continue
 		}
 		namePart := parts[0]
-		// format: "repo/name version"
 		slash := strings.Index(namePart, "/")
 		name := namePart
 		if slash >= 0 {

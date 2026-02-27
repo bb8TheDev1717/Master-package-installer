@@ -9,8 +9,8 @@ import (
 )
 
 var (
-	repoStyle    = lipgloss.NewStyle().Foreground(lipgloss.Color("#89b4fa")) // Catppuccin blue
-	aurStyle     = lipgloss.NewStyle().Foreground(lipgloss.Color("#a6e3a1")) // Catppuccin green
+	repoStyle    = lipgloss.NewStyle().Foreground(lipgloss.Color("#89b4fa"))
+	aurStyle     = lipgloss.NewStyle().Foreground(lipgloss.Color("#a6e3a1"))
 	nameStyle    = lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("#cdd6f4"))
 	versionStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("#fab387"))
 	descStyle    = lipgloss.NewStyle().Foreground(lipgloss.Color("#6c7086"))
@@ -33,12 +33,6 @@ func RenderPackage(p pacman.Package, index int, selected bool) string {
 		return selectedStyle.Render(line)
 	}
 	return line
-}
-
-func PrintPackages(pkgs []pacman.Package) {
-	for i, p := range pkgs {
-		fmt.Println(RenderPackage(p, i, false))
-	}
 }
 
 func Separator() string {

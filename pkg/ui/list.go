@@ -91,7 +91,7 @@ func (m *ListModel) applyFilter() {
 		default:
 			dist := util.Levenshtein(q, name)
 			if dist > 4 {
-				continue // too far off, skip
+				continue
 			}
 			s = 200 - dist
 		}
@@ -115,7 +115,6 @@ func (m ListModel) View() string {
 	sb.WriteString(inputStyle.Render("Filter: ") + m.filter + "█\n\n")
 	sb.WriteString(Separator() + "\n")
 
-	// Scroll window: keep cursor visible
 	limit := 25
 	start := 0
 	if m.cursor >= limit {
