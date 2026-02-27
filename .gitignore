@@ -3,3 +3,5 @@ src/
 *.tar.gz
 SSH_key_git
 SSH_key_git.pub
+build
+
