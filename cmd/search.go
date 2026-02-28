@@ -29,7 +29,7 @@ var searchCmd = &cobra.Command{
 			pkgs = append(pkgs, r.Package)
 		}
 
-		p := tea.NewProgram(ui.NewResultsModel(query, pkgs))
+		p := tea.NewProgram(ui.NewResultsModel(query, pkgs), tea.WithMouseCellMotion())
 		_, err = p.Run()
 		return err
 	},

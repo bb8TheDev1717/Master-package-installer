@@ -30,6 +30,17 @@ func (m ListModel) Init() tea.Cmd {
 
 func (m ListModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
+	case tea.MouseMsg:
+		switch msg.Button {
+		case tea.MouseButtonWheelUp:
+			if m.cursor > 0 {
+				m.cursor--
+			}
+		case tea.MouseButtonWheelDown:
+			if m.cursor < len(m.filtered)-1 {
+				m.cursor++
+			}
+		}
 	case tea.KeyMsg:
 		switch msg.String() {
 		case "esc", "ctrl+c":

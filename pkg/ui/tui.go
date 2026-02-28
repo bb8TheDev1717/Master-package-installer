@@ -66,6 +66,18 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.width = msg.Width
 		m.height = msg.Height
 
+	case tea.MouseMsg:
+		switch msg.Button {
+		case tea.MouseButtonWheelUp:
+			if m.state == StateMenu && m.cursor > 0 {
+				m.cursor--
+			}
+		case tea.MouseButtonWheelDown:
+			if m.state == StateMenu && m.cursor < len(Actions)-1 {
+				m.cursor++
+			}
+		}
+
 	case tea.KeyMsg:
 		switch m.state {
 		case StateMenu:

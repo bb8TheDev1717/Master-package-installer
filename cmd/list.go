@@ -20,7 +20,7 @@ var listCmd = &cobra.Command{
 
 		for {
 			m := ui.NewListModel(pkgs)
-			p := tea.NewProgram(m)
+			p := tea.NewProgram(m, tea.WithMouseCellMotion())
 			result, err := p.Run()
 			if err != nil {
 				return err
@@ -41,7 +41,7 @@ var listCmd = &cobra.Command{
 				full = pkg // use what we already have if both fail
 			}
 
-			p2 := tea.NewProgram(ui.NewInfoModel(full))
+			p2 := tea.NewProgram(ui.NewInfoModel(full), tea.WithMouseCellMotion())
 			if _, err := p2.Run(); err != nil {
 				return err
 			}

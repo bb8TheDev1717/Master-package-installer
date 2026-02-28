@@ -1,7 +1,8 @@
-master
 src/
+build/
+pkg/master-pkg/
+pkg/master-pkg-debug/
 *.tar.gz
+*.pkg.tar.zst
 SSH_key_git
 SSH_key_git.pub
-build
-

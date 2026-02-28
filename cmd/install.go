@@ -1,16 +1,15 @@
 package cmd
 
 import (
-	"bufio"
 	"fmt"
 	"masterr/pkg/aur"
 	"masterr/pkg/pacman"
 	"masterr/pkg/search"
 	"masterr/pkg/ui"
 	"os"
-	"strconv"
 	"strings"
 
+	tea "github.com/charmbracelet/bubbletea"
 	"github.com/spf13/cobra"
 )
 
@@ -28,36 +27,25 @@ var installCmd = &cobra.Command{
 			return nil
 		}
 
-		// Show up to 20 results
-		limit := len(results)
-		if limit > 20 {
-			limit = 20
+		var pkgs []pacman.Package
+		for _, r := range results {
+			pkgs = append(pkgs, r.Package)
 		}
-		fmt.Println(ui.Separator())
-		for i := 0; i < limit; i++ {
-			fmt.Println(ui.RenderPackage(results[i].Package, i, false))
+
+		p := tea.NewProgram(ui.NewResultsModel(query, pkgs), tea.WithMouseCellMotion())
+		result, err := p.Run()
+		if err != nil {
+			return err
 		}
-		fmt.Println(ui.Separator())
 
-		reader := bufio.NewReader(os.Stdin)
-		fmt.Print("Select number to install (or q to quit): ")
-		input, _ := reader.ReadString('\n')
-		input = strings.TrimSpace(input)
-
-		if input == "q" || input == "" {
+		final, ok := result.(ui.ResultsModel)
+		if !ok || final.Selected == nil {
 			return nil
 		}
 
-		n, err := strconv.Atoi(input)
-		if err != nil || n < 1 || n > limit {
-			fmt.Println("Invalid selection.")
-			return nil
-		}
-
-		pkg := results[n-1].Package
+		pkg := *final.Selected
 		fmt.Printf("Installing %s from %s...\n", pkg.Name, pkg.Source)
 
-		// Route to correct backend based on package source
 		if pkg.Source == "aur" {
 			c := aur.Install(pkg.Name)
 			c.Stdout = os.Stdout

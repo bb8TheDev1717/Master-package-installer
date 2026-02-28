@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"bufio"
 	"fmt"
 	"os"
 
@@ -19,7 +20,7 @@ var rootCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		for {
 			m := ui.NewModel()
-			p := tea.NewProgram(m)
+			p := tea.NewProgram(m, tea.WithMouseCellMotion())
 			result, err := p.Run()
 			if err != nil {
 				return err
@@ -37,6 +38,11 @@ var rootCmd = &cobra.Command{
 			}
 			cmd.Root().SetArgs(subArgs)
 			cmd.Root().Execute() //nolint:errcheck — errors printed to stderr by cobra
+
+			if final.Result == "install" || final.Result == "remove" || final.Result == "update" {
+				fmt.Print("\nPress Enter to continue...")
+				bufio.NewReader(os.Stdin).ReadString('\n') //nolint:errcheck
+			}
 		}
 	},
 }
