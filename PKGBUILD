@@ -9,7 +9,7 @@ license=('MIT')
 depends=('pacman' 'paru')
 makedepends=('go')
 source=("$pkgname-$pkgver.tar.gz::$url/archive/v$pkgver.tar.gz")
-sha256sums=('a77faea52157539ddd32062d4d4ea30dd0aa55d1b50203acb3012f123073d7dd')
+sha256sums=('c4be841696d2f1a65db64c0e77996dffd02ce8500e392bf9e1b0908d4421e283')
 
 build() {
     cd "Master-package-installer-$pkgver"
